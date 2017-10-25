@@ -1,12 +1,12 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var assign = require('domkit/appendVendorPrefix');
-var insertKeyframesRule = require('domkit/insertKeyframesRule');
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import assign from 'domkit/appendVendorPrefix'
+import insertKeyframesRule from 'domkit/insertKeyframesRule'
 
 /**
  * @type {Object}
  */
-var keyframes = {
+const keyframes = {
     '100%': {
         transform: 'rotate(360deg)'
     }
@@ -15,64 +15,62 @@ var keyframes = {
 /**
  * @type {String}
  */
-var animationName = insertKeyframesRule(keyframes);
+const animationName = insertKeyframesRule(keyframes);
 
-var Loader = React.createClass({
+export default class MoonLoader extends React.Component {
     /**
      * @type {Object}
      */
-    propTypes: {
+    static ipropTypes = {
         loading: PropTypes.bool,
         color: PropTypes.string,
         size: PropTypes.string,
-        margin: PropTypes.string
-    },
+        margin: PropTypes.string,
+    }
 
     /**
-     * @return {Object}
+     * @type {Object}
      */
-    getDefaultProps: function() {
-        return {
-            loading: true,
-            color: '#ffffff',
-            size: '60px'
-        };
-    },
+    static defaultProps = {
+        loading: true,
+        color: '#ffffff',
+        size: '60px',
+    }
 
     /**
      * @param  {String} size
      * @return {Object}
      */
-    getBallStyle: function(size) {
+    getBallStyle(size) {
         return {
             width: size,
             height: size,
             borderRadius: '100%',
             verticalAlign: this.props.verticalAlign
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getAnimationStyle: function(i) {
-        var animation = [animationName, '0.6s', '0s', 'infinite', 'linear'].join(' ');
-        var animationFillMode = 'forwards';
+    getAnimationStyle(i) {
+        const animation = [animationName, '0.6s', '0s', 'infinite', 'linear'].join(' ');
+        const animationFillMode = 'forwards';
 
         return {
             animation: animation,
             animationFillMode: animationFillMode
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getStyle: function(i) {
-        var size = parseInt(this.props.size);
-        var moonSize = size/7;
+    getStyle(i) {
+        const size = parseInt(this.props.size);
+        const moonSize = size/7;
 
         if (i == 1) {
             return assign(
@@ -103,13 +101,13 @@ var Loader = React.createClass({
                 }
             );
         }
-    },
+    }
 
     /**
      * @param  {Boolean} loading
      * @return {ReactComponent || null}
      */
-    renderLoader: function(loading) {
+    renderLoader(loading) {
         if (loading) {
             return (
                 <div id={this.props.id} className={this.props.className}>
@@ -122,11 +120,9 @@ var Loader = React.createClass({
         }
 
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         return this.renderLoader(this.props.loading);
     }
-});
-
-module.exports = Loader;
+}

@@ -1,12 +1,12 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var assign = require('domkit/appendVendorPrefix');
-var insertKeyframesRule = require('domkit/insertKeyframesRule');
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import assign from 'domkit/appendVendorPrefix'
+import insertKeyframesRule from 'domkit/insertKeyframesRule'
 
 /**
  * @type {Object}
  */
-var rotateKeyframes = {
+const rotateKeyframes = {
     '100%': {
         transform: 'rotate(360deg)'
     }
@@ -15,7 +15,7 @@ var rotateKeyframes = {
 /**
  * @type {Object}
  */
-var bounceKeyframes = {
+const bounceKeyframes = {
     '0%, 100%': {
         transform: 'scale(0)'
     },
@@ -27,40 +27,38 @@ var bounceKeyframes = {
 /**
  * @type {String}
  */
-var rotateAnimationName = insertKeyframesRule(rotateKeyframes);
+const rotateAnimationName = insertKeyframesRule(rotateKeyframes);
 
 /**
  * @type {String}
  */
-var bounceAnimationName = insertKeyframesRule(bounceKeyframes);
+const bounceAnimationName = insertKeyframesRule(bounceKeyframes);
 
-var Loader = React.createClass({
+export default class DotLoader extends React.Component {
     /**
      * @type {Object}
      */
-    propTypes: {
+    static propTypes = {
         loading: PropTypes.bool,
         color: PropTypes.string,
         size: PropTypes.string,
-        margin: PropTypes.string
-    },
+        margin: PropTypes.string,
+    }
 
     /**
-     * @return {Object}
+     * @type {Object}
      */
-    getDefaultProps: function() {
-        return {
+    static defaultProps = {
             loading: true,
             color: '#ffffff',
-            size: '60px'
-        };
-    },
+            size: '60px',
+    }
 
     /**
      * @param  {String} size
      * @return {Object}
      */
-    getBallStyle: function(size) {
+    getBallStyle(size) {
         return {
             backgroundColor: this.props.color,
             width: size,
@@ -68,29 +66,29 @@ var Loader = React.createClass({
             borderRadius: '100%',
             verticalAlign: this.props.verticalAlign
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getAnimationStyle: function(i) {
-        var animation = [i==0 ? rotateAnimationName : bounceAnimationName, '2s', i==2? '-1s': '0s', 'infinite', 'linear'].join(' ');
-        var animationFillMode = 'forwards';
+    getAnimationStyle(i) {
+        const animation = [i==0 ? rotateAnimationName : bounceAnimationName, '2s', i==2? '-1s': '0s', 'infinite', 'linear'].join(' ');
+        const animationFillMode = 'forwards';
 
         return {
             animation: animation,
             animationFillMode: animationFillMode
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getStyle: function(i) {
-        var size = parseInt(this.props.size);
-        var ballSize = size/2;
+    getStyle(i) {
+        const size = parseInt(this.props.size);
+        const ballSize = size/2;
 
         if (i) {
             return assign(
@@ -112,13 +110,13 @@ var Loader = React.createClass({
                 position: 'relative'
             }
         );
-    },
+    }
 
     /**
      * @param  {Boolean} loading
      * @return {ReactComponent || null}
      */
-    renderLoader: function(loading) {
+    renderLoader(loading) {
         if (loading) {
             return (
                 <div id={this.props.id} className={this.props.className}>
@@ -131,11 +129,9 @@ var Loader = React.createClass({
         }
 
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         return this.renderLoader(this.props.loading);
     }
-});
-
-module.exports = Loader;
+}

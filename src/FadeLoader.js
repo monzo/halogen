@@ -1,12 +1,12 @@
-var React = require('react');
-var PropTypes = require('prop-types')
-var assign = require('domkit/appendVendorPrefix');
-var insertKeyframesRule = require('domkit/insertKeyframesRule');
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import assign from 'domkit/appendVendorPrefix'
+import insertKeyframesRule from 'domkit/insertKeyframesRule'
 
 /**
  * @type {Object}
  */
-var keyframes = {
+const keyframes = {
     '50%': {
         opacity: 0.3
     },
@@ -18,40 +18,38 @@ var keyframes = {
 /**
  * @type {String}
  */
-var animationName = insertKeyframesRule(keyframes);
+const animationName = insertKeyframesRule(keyframes);
 
-var Loader = React.createClass({
+export default class FadeLoader extends React.Component {
     /**
      * @type {Object}
      */
-    propTypes: {
+    static propTypes = {
         loading: PropTypes.bool,
         color: PropTypes.string,
         height: PropTypes.string,
         width: PropTypes.string,
         margin: PropTypes.string,
-        radius: PropTypes.string
-    },
+        radius: PropTypes.string,
+    }
 
     /**
-     * @return {Object}
+     * @type {Object}
      */
-    getDefaultProps: function() {
-        return {
-            loading: true,
-            color: '#ffffff',
-            height: '15px',
-            width: '5px',
-            margin: '2px',
-            radius: '2px'
-        };
-    },
+    static defaultProps = {
+        loading: true,
+        color: '#ffffff',
+        height: '15px',
+        width: '5px',
+        margin: '2px',
+        radius: '2px',
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getLineStyle: function(i) {
+    getLineStyle(i) {
         return {
             backgroundColor: this.props.color,
             height: this.props.height,
@@ -60,31 +58,31 @@ var Loader = React.createClass({
             borderRadius: this.props.radius,
             verticalAlign: this.props.verticalAlign
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getAnimationStyle: function(i) {
-        var animation = [animationName, '1.2s', (i * 0.12) + 's', 'infinite', 'ease-in-out'].join(' ');
-        var animationFillMode = 'both';
+    getAnimationStyle(i) {
+        const animation = [animationName, '1.2s', (i * 0.12) + 's', 'infinite', 'ease-in-out'].join(' ');
+        const animationFillMode = 'both';
 
         return {
             animation: animation,
             animationFillMode: animationFillMode
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getPosStyle: function(i) {
-        var radius = '20';
-        var quarter = (radius / 2) + (radius / 5.5);
+    getPosStyle(i) {
+        const radius = '20';
+        const quarter = (radius / 2) + (radius / 5.5);
 
-        var lines = {
+        const lines = {
             l1: {
                 top: radius,
                 left: 0
@@ -126,13 +124,13 @@ var Loader = React.createClass({
         };
 
         return lines['l'+i];
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getStyle: function(i) {
+    getStyle(i) {
         return assign(
             this.getLineStyle(i),
             this.getPosStyle(i),
@@ -141,15 +139,15 @@ var Loader = React.createClass({
                 position: 'absolute'
             }
         );
-    },
+    }
 
     /**
      * @param  {Boolean} loading
      * @return {ReactComponent || null}
      */
-    renderLoader: function(loading) {
+    renderLoader(loading) {
         if (loading) {
-            var style = {
+            const style = {
                 position: 'relative',
                 fontSize: 0
             };
@@ -171,11 +169,9 @@ var Loader = React.createClass({
         }
 
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         return this.renderLoader(this.props.loading);
     }
-});
-
-module.exports = Loader;
+}

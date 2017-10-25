@@ -1,12 +1,12 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var assign = require('domkit/appendVendorPrefix');
-var insertKeyframesRule = require('domkit/insertKeyframesRule');
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import assign from 'domkit/appendVendorPrefix'
+import insertKeyframesRule from 'domkit/insertKeyframesRule'
 
 /**
  * @type {Object}
  */
-var keyframes = {
+const keyframes = {
     '0%, 100%': {
         transform: 'scale(0)'
     },
@@ -18,33 +18,31 @@ var keyframes = {
 /**
  * @type {String}
  */
-var animationName = insertKeyframesRule(keyframes);
+const animationName = insertKeyframesRule(keyframes);
 
-var Loader = React.createClass({
+export default class BounceLoader extends React.Component {
     /**
      * @type {Object}
      */
-    propTypes: {
+    static propTypes = {
         loading: PropTypes.bool,
         color: PropTypes.string,
-        size: PropTypes.string
-    },
+        size: PropTypes.string,
+    }
+
+    /**
+    * @type {Object}
+    */
+    static defaultProps = {
+        loading: true,
+        color: '#ffffff',
+        size: '60px',
+    }
 
     /**
      * @return {Object}
      */
-    getDefaultProps: function() {
-        return {
-            loading: true,
-            color: '#ffffff',
-            size: '60px'
-        };
-    },
-
-    /**
-     * @return {Object}
-     */
-    getBallStyle: function() {
+    getBallStyle() {
         return {
             backgroundColor: this.props.color,
             width: this.props.size,
@@ -56,27 +54,27 @@ var Loader = React.createClass({
             left: 0,
             verticalAlign: this.props.verticalAlign
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getAnimationStyle: function(i) {
-        var animation = [animationName, '2s', i==1? '1s': '0s', 'infinite', 'ease-in-out'].join(' ');
-        var animationFillMode = 'both';
+    getAnimationStyle(i) {
+        const animation = [animationName, '2s', i==1? '1s': '0s', 'infinite', 'ease-in-out'].join(' ');
+        const animationFillMode = 'both';
 
         return {
             animation: animation,
             animationFillMode: animationFillMode
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getStyle: function(i) {
+    getStyle(i) {
         if (i) {
             return assign(
                 this.getBallStyle(i),
@@ -91,13 +89,13 @@ var Loader = React.createClass({
                 position: 'relative'
             }
         );
-    },
+    }
 
     /**
      * @param  {Boolean} loading
      * @return {ReactComponent || null}
      */
-    renderLoader: function(loading) {
+    renderLoader(loading) {
         if (loading) {
             return (
                 <div id={this.props.id} className={this.props.className}>
@@ -110,11 +108,9 @@ var Loader = React.createClass({
         }
 
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         return this.renderLoader(this.props.loading);
     }
-});
-
-module.exports = Loader;
+}

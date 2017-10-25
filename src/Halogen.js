@@ -1,18 +1,16 @@
-module.exports = {
-    PulseLoader: require('./PulseLoader'),
-    RotateLoader: require('./RotateLoader'),
-    BeatLoader: require('./BeatLoader'),
-    RiseLoader: require('./RiseLoader'),
-    SyncLoader: require('./SyncLoader'),
-    GridLoader: require('./GridLoader'),
-    ClipLoader: require('./ClipLoader'),
-    SquareLoader: require('./SquareLoader'),
-    DotLoader: require('./DotLoader'),
-    PacmanLoader: require('./PacmanLoader'),
-    MoonLoader: require('./MoonLoader'),
-    RingLoader: require('./RingLoader'),
-    BounceLoader: require('./BounceLoader'),
-    SkewLoader: require('./SkewLoader'),
-    FadeLoader: require('./FadeLoader'),
-    ScaleLoader: require('./ScaleLoader')
-};
+export { default as PulseLoader } from './PulseLoader'
+export { default as RotateLoader } from './RotateLoader'
+export { default as BeatLoader } from './BeatLoader'
+export { default as RiseLoader } from './RiseLoader'
+export { default as SyncLoader } from './SyncLoader'
+export { default as GridLoader } from './GridLoader'
+export { default as ClipLoader } from './ClipLoader'
+export { default as SquareLoader } from './SquareLoader'
+export { default as DotLoader } from './DotLoader'
+export { default as PacmanLoader } from './PacmanLoader'
+export { default as MoonLoader } from './MoonLoader'
+export { default as RingLoader } from './RingLoader'
+export { default as BounceLoader } from './BounceLoader'
+export { default as SkewLoader } from './SkewLoader'
+export { default as FadeLoader } from './FadeLoader'
+export { default as ScaleLoader } from './ScaleLoader'

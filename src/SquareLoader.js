@@ -1,12 +1,12 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var assign = require('domkit/appendVendorPrefix');
-var insertKeyframesRule = require('domkit/insertKeyframesRule');
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import assign from 'domkit/appendVendorPrefix'
+import insertKeyframesRule from 'domkit/insertKeyframesRule'
 
 /**
  * @type {Object}
  */
-var keyframes = {
+const keyframes = {
     '25%': {
         transform: 'rotateX(180deg) rotateY(0)'
     },
@@ -24,63 +24,61 @@ var keyframes = {
 /**
  * @type {String}
  */
-var animationName = insertKeyframesRule(keyframes);
+const animationName = insertKeyframesRule(keyframes);
 
-var Loader = React.createClass({
+export default class SquareLoader extends React.Component {
     /**
      * @type {Object}
      */
-    propTypes: {
+    static propTypes = {
         loading: PropTypes.bool,
         color: PropTypes.string,
         size: PropTypes.string,
-        margin: PropTypes.string
-    },
+        margin: PropTypes.string,
+    }
+
+    /**
+     * @type {Object}
+     */
+    static defaultProps = {
+        loading: true,
+        color: '#ffffff',
+        size: '50px',
+    }
 
     /**
      * @return {Object}
      */
-    getDefaultProps: function() {
-        return {
-            loading: true,
-            color: '#ffffff',
-            size: '50px'
-        };
-    },
-
-    /**
-     * @return {Object}
-     */
-    getSquareStyle: function() {
+    getSquareStyle() {
         return {
             backgroundColor: this.props.color,
             width: this.props.size,
             height: this.props.size,
             verticalAlign: this.props.verticalAlign
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getAnimationStyle: function(i) {
-        var animation = [animationName, '3s', '0s', 'infinite', 'cubic-bezier(.09,.57,.49,.9)'].join(' ');
-        var animationFillMode = 'both';
-        var perspective = '100px';
+    getAnimationStyle(i) {
+        const animation = [animationName, '3s', '0s', 'infinite', 'cubic-bezier(.09,.57,.49,.9)'].join(' ');
+        const animationFillMode = 'both';
+        const perspective = '100px';
 
         return {
             perspective: perspective,
             animation: animation,
             animationFillMode: animationFillMode
         };
-    },
+    }
 
     /**
      * @param  {Number} i
      * @return {Object}
      */
-    getStyle: function(i) {
+    getStyle(i) {
         return assign(
             this.getSquareStyle(i),
             this.getAnimationStyle(i),
@@ -88,13 +86,13 @@ var Loader = React.createClass({
                 display: 'inline-block'
             }
         );
-    },
+    }
 
     /**
      * @param  {Boolean} loading
      * @return {ReactComponent || null}
      */
-    renderLoader: function(loading) {
+    renderLoader(loading) {
         if (loading) {
             return (
                 <div id={this.props.id} className={this.props.className}>
@@ -104,11 +102,9 @@ var Loader = React.createClass({
         }
 
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         return this.renderLoader(this.props.loading);
     }
-});
-
-module.exports = Loader;
+}
